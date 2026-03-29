@@ -1,6 +1,9 @@
----
-title: "My First Post"
-pubDate: "2026-03-29"
----
-
-Hello! This is my first blog post using Astro and GitHub only.
+// src/pages/blog/[single].astro
+export async function getStaticPaths() {
+  // Automatically generate paths from your Markdown posts
+  const modules = import.meta.glob('../../content/posts/*.md', { eager: true });
+  return Object.keys(modules).map((path) => {
+    const slug = path.split('/').pop().replace('.md', '');
+    return { params: { single: slug } };
+  });
+}
